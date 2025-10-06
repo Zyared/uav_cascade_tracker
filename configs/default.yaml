@@ -1,0 +1,39 @@
+seed: 1337
+device: "cuda:0" # или "cpu"
+
+
+video:
+source: "data/samples/demo.mp4" # или 0 для веб-камеры
+write_output: true
+out_path: "runs/demo_out.mp4"
+display: false
+
+
+model:
+detector: "ssd_mobilenet" # или "yolo_nano"
+weights: "weights/ssd_mobilenet.onnx"
+conf_thr: 0.4
+iou_thr: 0.5
+classes: ["person", "car", "truck"]
+
+
+tracker:
+type: "sort" # или "deepsort"
+max_age: 30
+min_hits: 3
+iou_match_thr: 0.3
+use_mah_dist: true
+
+
+cascade:
+enable: true
+high_conf_min_tracks: 2
+max_pred_frames: 8 # при высокой уверенности – столько кадров без детектора
+low_conf_trigger: true # при падении уверенности – форс-детекция
+residual_thr: 9.0 # порог Махаланобиса для «здоровья» треков
+
+
+perf:
+half: true
+torchscript: false
+warmup: 5
